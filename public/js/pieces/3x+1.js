@@ -49,8 +49,8 @@ function setup() {
   let prevY = y2;
 
   for (let i = 0; i < nums.length; i++) {
-    const odd = num % 2 === 1;
-    const { x, y } = getNextCoordinates(odd);
+    const odd = nums[i] % 2 === 1;
+    const { x, y } = getNextCoordinates(odd, prevX, prevY);
     line(prevX, prevY, x, y);
     prevX = x;
     prevY = y;
@@ -59,10 +59,10 @@ function setup() {
 
 function draw() {}
 
-function getNextCoordinates(odd) {
+function getNextCoordinates(odd, prevX, prevY) {
   const angle = odd ? oddAngle + compass : evenAngle + compass;
-  const x = lineLength * Math.cos(angle);
-  const y = lineLength * Math.sin(angle);
+  const x = lineLength * Math.cos(angle) + prevX;
+  const y = lineLength * Math.sin(angle) + prevY;
   compass = angle;
   return { x, y };
 }
