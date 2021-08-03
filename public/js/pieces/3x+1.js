@@ -19,6 +19,7 @@ nums.reverse();
 console.log(nums);
 
 // Set random angles
+let compass = 90;
 const evenAngle = 14;
 const oddAngle = 8;
 
@@ -58,8 +59,12 @@ function setup() {
 
 function draw() {}
 
-function getNextCoordinates(odd) {
-  const x = lineLength * Math.cos() * odd ? oddAngle : evenAngle;
-  const y = lineLength * Math.sin() * odd ? oddAngle : evenAngle;
+function updateCompass(currentAngle) {
+  compass += currentAngle
+}
+
+function getNextCoordinates(odd, compass) {
+  const x = lineLength * Math.cos() * odd ? oddAngle + compass : evenAngle + compass;
+  const y = lineLength * Math.sin() * odd ? oddAngle + compass : evenAngle + compass;
   return { x, y };
 }
