@@ -59,12 +59,10 @@ function setup() {
 
 function draw() {}
 
-function updateCompass(currentAngle) {
-  compass += currentAngle
-}
-
-function getNextCoordinates(odd, compass) {
-  const x = lineLength * Math.cos() * odd ? oddAngle + compass : evenAngle + compass;
-  const y = lineLength * Math.sin() * odd ? oddAngle + compass : evenAngle + compass;
+function getNextCoordinates(odd) {
+  const angle = odd ? oddAngle + compass : evenAngle + compass;
+  const x = lineLength * Math.cos() * angle;
+  const y = lineLength * Math.sin() * angle;
+  compass = angle;
   return { x, y };
 }
