@@ -19,16 +19,34 @@ nums.reverse();
 console.log(nums);
 
 function setup() {
-  // Grab the smaller of the window sizes and use that as the canvas size.
+  // Use fixed canvas size
   createCanvas(500, 500);
+  // Move to the center of the canvas and draw a square that encompasses the canvas.
+  push();
+  translate(width / 2, width / 2);
+  rectMode(CENTER);
+  square(0, 0, width / 2);
+  pop();
 
-  // let x1 =
-  // let y1 =
-  // let x2 =
-  // let y2 =
+  // Starting line length
+  const lineLength = 25;
+
+  // Set starting coordinates
+  let x1 = 250;
+  let y1 = 250;
+  let x2 = 250;
+  let y2 = x2 - lineLength;
 
   strokeWeight(1);
-  line(30, 20, 85, 75);
+  line(x1, y1, x2, y2);
+
+  // for (let i = 0; i < num.length; i++) {
+  //   const line = getNextCoordinates(x1)
+  // }
 }
 
 function draw() {}
+
+function getNextCoordinates(x1, y1, x2, y2) {
+  // const x = lineLength * Math.cos() * 2;
+}
