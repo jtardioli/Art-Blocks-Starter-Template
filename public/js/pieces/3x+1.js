@@ -61,8 +61,8 @@ function draw() {}
 
 function getNextCoordinates(odd) {
   const angle = odd ? oddAngle + compass : evenAngle + compass;
-  const x = lineLength * Math.cos() * angle;
-  const y = lineLength * Math.sin() * angle;
+  const x = lineLength * Math.cos(angle);
+  const y = lineLength * Math.sin(angle);
   compass = angle;
   return { x, y };
 }
