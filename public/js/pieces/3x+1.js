@@ -22,6 +22,9 @@ console.log(nums);
 const evenAngle = 14;
 const oddAngle = 8;
 
+// Starting line length
+const lineLength = 25;
+
 function setup() {
   // Use fixed canvas size
   createCanvas(500, 500);
@@ -32,9 +35,6 @@ function setup() {
   square(0, 0, width / 2);
   pop();
 
-  // Starting line length
-  const lineLength = 25;
-
   // Set starting coordinates
   let x1 = 250;
   let y1 = 250;
@@ -44,9 +44,15 @@ function setup() {
   strokeWeight(1);
   line(x1, y1, x2, y2);
 
-  for (let i = 0; i < num.length; i++) {
+  let prevX = x2;
+  let prevY = y2;
+
+  for (let i = 0; i < nums.length; i++) {
     const odd = num % 2 === 1;
-    const line = getNextCoordinates(odd);
+    const { x, y } = getNextCoordinates(odd);
+    line(prevX, prevY, x, y);
+    prevX = x;
+    prevY = y;
   }
 }
 
@@ -55,4 +61,5 @@ function draw() {}
 function getNextCoordinates(odd) {
   const x = lineLength * Math.cos() * odd ? oddAngle : evenAngle;
   const y = lineLength * Math.sin() * odd ? oddAngle : evenAngle;
+  return { x, y };
 }
