@@ -18,6 +18,10 @@ nums.reverse();
 
 console.log(nums);
 
+// Set random angles
+const evenAngle = 14;
+const oddAngle = 8;
+
 function setup() {
   // Use fixed canvas size
   createCanvas(500, 500);
@@ -40,13 +44,15 @@ function setup() {
   strokeWeight(1);
   line(x1, y1, x2, y2);
 
-  // for (let i = 0; i < num.length; i++) {
-  //   const line = getNextCoordinates(x1)
-  // }
+  for (let i = 0; i < num.length; i++) {
+    const odd = num % 2 === 1;
+    const line = getNextCoordinates(odd);
+  }
 }
 
 function draw() {}
 
-function getNextCoordinates(x1, y1, x2, y2) {
-  // const x = lineLength * Math.cos() * 2;
+function getNextCoordinates(odd) {
+  const x = lineLength * Math.cos() * odd ? oddAngle : evenAngle;
+  const y = lineLength * Math.sin() * odd ? oddAngle : evenAngle;
 }
