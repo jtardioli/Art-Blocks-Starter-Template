@@ -7,7 +7,7 @@ const MIN_Y = 0
 const MAX_Y = CANVAS_SIZE
 const MAX_FIXED_Y = 50
 
-const txHash = '0x8bcb3d0fc92101efabe287363814c7a0cde888e3ff2f053aa265211f70d00e3a'
+const txHash = '0xd01ea1542d0e83a824783af06a8072267042147b178bebae37979907236bfebf'
 
 const hashPairs = [];
 for (let j = 0; j < 32; j++) {
@@ -18,7 +18,7 @@ const decPairs = hashPairs.map(x => {
   return parseInt(x, 16);
 });
 
-const fps = 15;
+const fps = 30;
 
 function setup() {
   createCanvas(CANVAS_SIZE, CANVAS_SIZE);
@@ -50,8 +50,8 @@ function draw() {
     currYStart = decPairs[3] / 255 * MAX_FIXED_Y
     yIncrement = Math.floor(decPairs[4] / 255 * 3)
   } else {
-    yMin = 100;
-    yMax = 500;
+    yMin = decPairs[4] / 255 * CANVAS_SIZE / 4
+    yMax = (decPairs[5] / 255 * CANVAS_SIZE / 2) + CANVAS_SIZE / 2
   }
 
   let diaMin = 1;
