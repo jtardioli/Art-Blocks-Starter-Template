@@ -13,7 +13,7 @@ const decPairs = hashPairs.map(x => {
 });
 
 const canvasSize = 500;
-const fps = 30;
+const fps = 60;
 
 function setup() {
   createCanvas(canvasSize, canvasSize);
@@ -39,23 +39,18 @@ function draw() {
   }
   let colorIncrement = 1;
   
-  let yMin = -2;
+  let yMin = 0;
   let yMax = 200;
-  let yIncrement = 0.1;
+  let yIncrement = 1;
 
   let diaMin = 1;
   let diaMax = 5;
   let diaIncrement = 1;
 
   for (let i = 0; i < 90; i++) {
+    // Get dynamic color
     let currColor = getItem(`currColor[${i}]`);
     let colorIncrementing = !!getItem(`colorIncrementing[${i}]`);
-    
-    let currY = getItem(`currY[${i}]`);
-    let yIncrementing = !!getItem(`yIncrementing[${i}]`);
-
-    let currDiameter = getItem(`currDiameter[${i}]`);
-    let diaIncrementing = !!getItem(`diaIncrementing[${i}]`);
 
     if (!currColor && currColor !== 0) {
       currColor = randomIntFromInterval(colorMin, colorMax);
@@ -64,6 +59,10 @@ function draw() {
       currColor = value
       storeItem(`colorIncrementing[${i}]`, newIncrementing);
     }
+    
+    // Get dynamic y index
+    let currY = getItem(`currY[${i}]`);
+    let yIncrementing = !!getItem(`yIncrementing[${i}]`);
 
     if (!currY && currY !== 0) {
       currY = randomIntFromInterval(yMin, yMax)
@@ -73,6 +72,10 @@ function draw() {
       storeItem(`yIncrementing[${i}]`, newIncrementing);
     }
 
+    // Get dynamic diameter
+    let currDiameter = getItem(`currDiameter[${i}]`);
+    let diaIncrementing = !!getItem(`diaIncrementing[${i}]`);
+
     if (!currDiameter && currDiameter !== 0) {
       currDiameter = randomIntFromInterval(diaMin, diaMax)
     } else {
@@ -81,9 +84,9 @@ function draw() {
       storeItem(`diaIncrementing[${i}]`, newIncrementing);
     }
 
-    console.log(currDiameter)
-
     storeItem(`currColor[${i}]`, currColor);
+    storeItem(`currY[${i}]`, currY);
+    storeItem(`currDiameter[${i}]`, currDiameter);
     fill(currColor, 90, 90);
     noStroke();
     circle(0, currY, currDiameter);
