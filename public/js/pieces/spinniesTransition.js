@@ -18,9 +18,20 @@ function draw() {
   let currY = 0;
   let currDiameter = 100;
 
-  for (let i = 0; i < 360 * 4; i++) {
-    let rgbVal = Math.floor(Math.random() * 360);
-    fill(rgbVal, 90, 90);
+  for (let i = 0; i < 360; i++) {
+    let currColor = getItem(`currColor[${i}]`);
+    if (!currColor && currColor !== 0) {
+      console.log("no currColor");
+      currColor = Math.floor(Math.random() * 360);
+    } else {
+      if (currColor < 360) {
+        currColor += 5;
+      } else {
+        currColor = 0;
+      }
+    }
+    storeItem(`currColor[${i}]`, currColor);
+    fill(currColor, 90, 90);
     noStroke();
     circle(0, currY, currDiameter);
     rotate(5);
