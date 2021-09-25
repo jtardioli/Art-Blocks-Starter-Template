@@ -1,7 +1,13 @@
-const MAX_COLOR = 360
-const MIN_COLOR = 0
+const CANVAS_SIZE = 500;
 
-const txHash = '0xd01ea1542d0e83a824783af06a8072267042147b178bebae37979907236bfebf'
+const MIN_COLOR = 0
+const MAX_COLOR = 360
+
+const MIN_Y = 0
+const MAX_Y = CANVAS_SIZE
+const MAX_FIXED_Y = 50
+
+const txHash = '0x8bcb3d0fc92101efabe287363814c7a0cde888e3ff2f053aa265211f70d00e3a'
 
 const hashPairs = [];
 for (let j = 0; j < 32; j++) {
@@ -12,11 +18,10 @@ const decPairs = hashPairs.map(x => {
   return parseInt(x, 16);
 });
 
-const canvasSize = 500;
-const fps = 60;
+const fps = 15;
 
 function setup() {
-  createCanvas(canvasSize, canvasSize);
+  createCanvas(CANVAS_SIZE, CANVAS_SIZE);
   dim = width / 2;
   colorMode(HSB, 360, 100, 100);
   ellipseMode(RADIUS);
@@ -27,7 +32,7 @@ function setup() {
 function draw() {
   angleMode(DEGREES);
 
-  translate(canvasSize / 2, canvasSize / 2);
+  translate(CANVAS_SIZE / 2, CANVAS_SIZE / 2);
   noFill();
 
   let colorMin = decPairs[0] / 255 * 360;
@@ -39,9 +44,15 @@ function draw() {
   }
   let colorIncrement = 1;
   
-  let yMin = 0;
-  let yMax = 200;
-  let yIncrement = 1;
+  let yFixed = decPairs[3] % 2 === 1
+  let currYStart, yMin, yMax, yIncrement
+  if (yFixed) {
+    currYStart = decPairs[3] / 255 * MAX_FIXED_Y
+    yIncrement = Math.floor(decPairs[4] / 255 * 3)
+  } else {
+    yMin = 100;
+    yMax = 500;
+  }
 
   let diaMin = 1;
   let diaMax = 5;
@@ -59,17 +70,30 @@ function draw() {
       currColor = value
       storeItem(`colorIncrementing[${i}]`, newIncrementing);
     }
-    
-    // Get dynamic y index
-    let currY = getItem(`currY[${i}]`);
-    let yIncrementing = !!getItem(`yIncrementing[${i}]`);
 
-    if (!currY && currY !== 0) {
-      currY = randomIntFromInterval(yMin, yMax)
+    // Get current y
+    if (!!getItem(`currY[${i}]`)) {
+      currY = getItem(`currY[${i}]`)
+      if (currY > CANVAS_SIZE) {
+        currY = currYStart
+      } 
     } else {
-      const {value, newIncrementing} = incrementInRange(currY, yMin, yMax, yIncrementing, yIncrement)
-      currY = value
-      storeItem(`yIncrementing[${i}]`, newIncrementing);
+      currY = currYStart
+    }
+
+    if (!yFixed) {
+      // Dynamic
+      let yIncrementing = !!getItem(`yIncrementing[${i}]`);
+      if (!currY && currY !== 0) {
+        currY = randomIntFromInterval(yMin, yMax)
+      } else {
+        const {value, newIncrementing} = incrementInRange(currY, yMin, yMax, yIncrementing, yIncrement)
+        currY = value
+        storeItem(`yIncrementing[${i}]`, newIncrementing);
+      }
+    } else {
+      // Fixed
+      currY = currY += yIncrement
     }
 
     // Get dynamic diameter
