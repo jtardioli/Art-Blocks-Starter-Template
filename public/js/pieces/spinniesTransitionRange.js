@@ -1,5 +1,5 @@
 const canvasSize = 500;
-const fps = 2;
+const fps = 30;
 
 function setup() {
   createCanvas(canvasSize, canvasSize);
@@ -16,29 +16,59 @@ function draw() {
   translate(canvasSize / 2, canvasSize / 2);
   noFill();
 
-  let currY = 0;
-  let currDiameter = 100;
-  let min = 30;
-  let max = 60;
+  let colorMin = 0;
+  let colorMax = 360;
   let colorIncrement = 1;
+  
+  let yMin = -2;
+  let yMax = 200;
+  let yIncrement = 0.1;
 
-  for (let i = 0; i < 360; i++) {
+  let diaMin = 1;
+  let diaMax = 5;
+  let diaIncrement = 1;
+
+  for (let i = 0; i < 90; i++) {
     let currColor = getItem(`currColor[${i}]`);
-    let incrementing = !!getItem(`incrementing[${i}]`);
+    let colorIncrementing = !!getItem(`colorIncrementing[${i}]`);
+    
+    let currY = getItem(`currY[${i}]`);
+    let yIncrementing = !!getItem(`yIncrementing[${i}]`);
+
+    let currDiameter = getItem(`currDiameter[${i}]`);
+    let diaIncrementing = !!getItem(`diaIncrementing[${i}]`);
+
     if (!currColor && currColor !== 0) {
-      currColor = randomIntFromInterval(min, max);
+      currColor = randomIntFromInterval(colorMin, colorMax);
     } else {
-      const {value, newIncrementing} = incrementInRange(currColor, min, max, incrementing, colorIncrement)
+      const {value, newIncrementing} = incrementInRange(currColor, colorMin, colorMax, colorIncrementing, colorIncrement)
       currColor = value
-      storeItem(`incrementing[${i}]`, newIncrementing);
+      storeItem(`colorIncrementing[${i}]`, newIncrementing);
     }
+
+    if (!currY && currY !== 0) {
+      currY = randomIntFromInterval(yMin, yMax)
+    } else {
+      const {value, newIncrementing} = incrementInRange(currY, yMin, yMax, yIncrementing, yIncrement)
+      currY = value
+      storeItem(`yIncrementing[${i}]`, newIncrementing);
+    }
+
+    if (!currDiameter && currDiameter !== 0) {
+      currDiameter = randomIntFromInterval(diaMin, diaMax)
+    } else {
+      const {value, newIncrementing} = incrementInRange(currDiameter, diaMin, diaMax, diaIncrementing, diaIncrement)
+      currDiameter = value
+      storeItem(`diaIncrementing[${i}]`, newIncrementing);
+    }
+
+    console.log(currDiameter)
+
     storeItem(`currColor[${i}]`, currColor);
     fill(currColor, 90, 90);
     noStroke();
     circle(0, currY, currDiameter);
     rotate(5);
-    currY += 2;
-    currDiameter += -1.2;
   }
 }
 
