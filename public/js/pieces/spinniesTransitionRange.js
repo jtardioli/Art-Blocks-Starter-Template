@@ -1,3 +1,17 @@
+const MAX_COLOR = 360
+const MIN_COLOR = 0
+
+const txHash = '0xd01ea1542d0e83a824783af06a8072267042147b178bebae37979907236bfebf'
+
+const hashPairs = [];
+for (let j = 0; j < 32; j++) {
+  hashPairs.push(txHash.slice(2 + (j * 2), 4 + (j * 2)));
+}
+
+const decPairs = hashPairs.map(x => {
+  return parseInt(x, 16);
+});
+
 const canvasSize = 500;
 const fps = 30;
 
@@ -16,8 +30,13 @@ function draw() {
   translate(canvasSize / 2, canvasSize / 2);
   noFill();
 
-  let colorMin = 0;
-  let colorMax = 360;
+  let colorMin = decPairs[0] / 255 * 360;
+  let colorMax = decPairs[1] / 255 * 360;
+  if (colorMin > colorMax) {
+    let tempColorMin = colorMin
+    colorMin = colorMax
+    colorMax = tempColorMin
+  }
   let colorIncrement = 1;
   
   let yMin = -2;
