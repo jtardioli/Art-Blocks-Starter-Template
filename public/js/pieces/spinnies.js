@@ -1,11 +1,12 @@
 const canvasSize = 500;
+const fps = 15;
 
 function setup() {
   createCanvas(canvasSize, canvasSize);
   dim = width / 2;
   colorMode(HSB, 360, 100, 100);
   ellipseMode(RADIUS);
-  frameRate(15);
+  frameRate(fps);
 }
 
 function draw() {
@@ -18,7 +19,7 @@ function draw() {
   let currDiameter = 100;
 
   for (let i = 0; i < 360 * 4; i++) {
-    let rgbVal = Math.floor(Math.random() * 255);
+    let rgbVal = Math.floor(Math.random() * 360);
     fill(rgbVal, 90, 90);
     noStroke();
     circle(0, currY, currDiameter);
