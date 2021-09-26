@@ -1,41 +1,47 @@
 const canvasSize = 500;
-const fps = 15;
+const fps = 8;
 
 function setup() {
-  createCanvas(canvasSize, canvasSize);
+  createCanvas(1500, 500);
   dim = width / 2;
   colorMode(HSB, 360, 100, 100);
   ellipseMode(RADIUS);
   frameRate(fps);
+  clearStorage();
 }
 
 function draw() {
   angleMode(DEGREES);
 
-  translate(canvasSize / 2, canvasSize / 2);
-  noFill();
+  translate(1500 / 2, 500 / 2);
 
   let currY = 0;
-  let currDiameter = 100;
+  let currDiameter = 20;
+  let min = 60;
+  let max = 200;
 
   for (let i = 0; i < 360; i++) {
     let currColor = getItem(`currColor[${i}]`);
     if (!currColor && currColor !== 0) {
       console.log("no currColor");
-      currColor = Math.floor(Math.random() * 360);
+      currColor = randomIntFromInterval(min, max);
     } else {
-      if (currColor < 360) {
+      if (currColor < max) {
         currColor += 5;
       } else {
         currColor = 0;
       }
     }
     storeItem(`currColor[${i}]`, currColor);
-    fill(currColor, 90, 90);
+    fill(currColor, 90, randomIntFromInterval(0, 90));
     noStroke();
-    circle(0, currY, currDiameter);
-    rotate(5);
-    currY += 1.2;
-    currDiameter += 0.1;
+    circle(60, currY, currDiameter);
+    rotate(230);
+    currY += 0;
+    currDiameter += 0.4;
+  }
+  function randomIntFromInterval(min, max) {
+    // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 }

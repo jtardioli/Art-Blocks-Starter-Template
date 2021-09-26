@@ -11,22 +11,23 @@ function setup() {
 
 function draw() {
   angleMode(DEGREES);
+  background(0);
 
   translate(canvasWidth / 2, canvasHeight / 2);
   noFill();
 
   let currY = 0;
-  let currDiameter = 900;
-  let min = 180;
-  let max = 350;
+  let currDiameter = 700;
+  let min = 0;
+  let max = 60;
 
   for (let i = 0; i < 360 * 4; i++) {
     let rgbVal = randomIntFromInterval(min, max);
     fill(rgbVal, 65, randomIntFromInterval(0, 90));
     noStroke();
     circle(0, currY, currDiameter);
-    rotate(5);
-    currY += -3;
+    rotate(300);
+    currY += 3;
     currDiameter += 1.2;
   }
 
