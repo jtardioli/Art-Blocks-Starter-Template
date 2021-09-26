@@ -15,8 +15,8 @@ function draw() {
 
   translate(1500 / 2, 500 / 2);
 
-  let currY = 0;
-  let currDiameter = 20;
+  let currY = 200;
+  let currDiameter = 300;
   let min = 60;
   let max = 200;
 
@@ -36,7 +36,7 @@ function draw() {
     fill(currColor, 90, randomIntFromInterval(0, 90));
     noStroke();
     circle(60, currY, currDiameter);
-    rotate(230);
+    rotate(20);
     currY += 4;
     currDiameter += 0.4;
   }

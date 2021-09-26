@@ -7,6 +7,7 @@ function setup() {
   colorMode(HSB, 360, 100, 100);
   ellipseMode(RADIUS);
   frameRate(8);
+  clearStorage();
 }
 
 function draw() {
