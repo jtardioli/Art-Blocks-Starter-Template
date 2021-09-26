@@ -7,7 +7,7 @@ const MIN_Y = 0
 const MAX_Y = CANVAS_SIZE
 const MAX_FIXED_Y = 50
 
-const txHash = '0xcf894a259028f1025035d185be74b4888cb408d725b62f9939f0031b280cb2df'
+const txHash = '0x767f618af3dc0d14c0f937a13d545360014a0bb650cab01e237060aac63ab22b'
 
 const hashPairs = [];
 for (let j = 0; j < 32; j++) {
@@ -61,6 +61,12 @@ function draw() {
     // TODO: Dynamic yIncrement
   }
 
+  let diameterFixed = decPairs[9] % 2 === 1
+  let currDiameterStart
+  if (diameterFixed) {
+    currDiameterStart = decPairs[10] / 255 * 100
+  }
+
   let diaMin = 1;
   let diaMax = 5;
   let diaIncrement = 1;
@@ -103,8 +109,13 @@ function draw() {
       currY = currY += yIncrement
     }
 
-    // Get dynamic diameter
-    let currDiameter = getItem(`currDiameter[${i}]`);
+    // Get current diameter
+    if (!!getItem(`currDiameter[${i}]`)) {
+      currDiameter = getItem(`currDiameter[${i}]`)
+    } else {
+      currDiameter = currDiameterStart
+    }
+
     let diaIncrementing = !!getItem(`diaIncrementing[${i}]`);
 
     if (!currDiameter && currDiameter !== 0) {
