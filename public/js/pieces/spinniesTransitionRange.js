@@ -7,7 +7,7 @@ const MIN_Y = 0
 const MAX_Y = CANVAS_SIZE
 const MAX_FIXED_Y = 50
 
-const txHash = '0xd01ea1542d0e83a824783af06a8072267042147b178bebae37979907236bfebf'
+const txHash = '0xcf894a259028f1025035d185be74b4888cb408d725b62f9939f0031b280cb2df'
 
 const hashPairs = [];
 for (let j = 0; j < 32; j++) {
@@ -111,7 +111,7 @@ function draw() {
     storeItem(`currColor[${i}]`, currColor);
     storeItem(`currY[${i}]`, currY);
     storeItem(`currDiameter[${i}]`, currDiameter);
-    fill(currColor, 90, 90);
+    fill(currColor, 90, randomIntFromInterval(70, 90));
     noStroke();
     circle(0, currY, currDiameter);
     rotate(5);
