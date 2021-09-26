@@ -45,13 +45,20 @@ function draw() {
   let colorIncrement = 1;
   
   let yFixed = decPairs[3] % 2 === 1
-  let currYStart, yMin, yMax, yIncrement
+  let currYStart, yMin, yMax
   if (yFixed) {
     currYStart = decPairs[3] / 255 * MAX_FIXED_Y
-    yIncrement = Math.floor(decPairs[4] / 255 * 3)
   } else {
     yMin = decPairs[4] / 255 * CANVAS_SIZE / 4
     yMax = (decPairs[5] / 255 * CANVAS_SIZE / 2) + CANVAS_SIZE / 2
+  }
+
+  let yIncrementFixed = decPairs[6] % 2 === 1
+  let yIncrement
+  if (yIncrementFixed) {
+    yIncrement = Math.floor(decPairs[7] / 255 * 3) + 1
+  } else {
+    // TODO: Dynamic yIncrement
   }
 
   let diaMin = 1;
