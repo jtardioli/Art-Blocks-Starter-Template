@@ -37,7 +37,7 @@ function draw() {
     noStroke();
     circle(60, currY, currDiameter);
     rotate(230);
-    currY += 0;
+    currY += ;
     currDiameter += 0.4;
   }
   function randomIntFromInterval(min, max) {
